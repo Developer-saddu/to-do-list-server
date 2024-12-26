@@ -6,22 +6,22 @@ const createTask = async (req, res) => {
     let taskInfo = await databases.tasks.create({
       taskName: inputData.task,
       dueDate: inputData.dueDate,
-      reamrk: inputData.reamrk
+      remark: inputData.remark,
     });
     if (taskInfo) {
       return res.status(201).json({
         success: true,
-        message: "Task created successfully"
+        message: "Task created successfully",
       });
     }
     return res.status(400).json({
       success: false,
-      message: "Failed to create task"
+      message: "Failed to create task",
     });
   } catch (error) {
     return res.status(501).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -34,17 +34,17 @@ const getTaskById = async (req, res) => {
     if (!task) {
       return res.status(404).json({
         success: false,
-        message: "Task not found"
+        message: "Task not found",
       });
     }
     return res.status(200).json({
       success: true,
-      data: task
+      data: task,
     });
   } catch (error) {
     return res.status(501).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -55,19 +55,19 @@ const getAllTasks = async (req, res) => {
     if (!tasks) {
       return res.status(404).json({
         success: false,
-        message: "No tasks found"
+        message: "No tasks found",
       });
     }
     return res.status(200).json({
       success: true,
-      data: tasks
+      data: tasks,
     });
   } catch (error) {
     console.log(error);
 
     return res.status(501).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -81,25 +81,25 @@ const updateTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({
         success: false,
-        message: "Task not found"
+        message: "Task not found",
       });
     }
 
     const updatedTask = await task.update({
       taskName: inputData.taskName,
       dueDate: inputData.dueDate,
-      reamrk: inputData.reamrk
+      reamrk: inputData.reamrk,
     });
 
     return res.status(200).json({
       success: true,
       message: "Task updated successfully",
-      data: updatedTask
+      data: updatedTask,
     });
   } catch (error) {
     return res.status(501).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -112,7 +112,7 @@ const deleteTask = async (req, res) => {
     if (!task) {
       return res.status(404).json({
         success: false,
-        message: "Task not found"
+        message: "Task not found",
       });
     }
 
@@ -120,12 +120,12 @@ const deleteTask = async (req, res) => {
 
     return res.status(200).json({
       success: true,
-      message: "Task deleted successfully"
+      message: "Task deleted successfully",
     });
   } catch (error) {
     return res.status(501).json({
       success: false,
-      message: error.message
+      message: error.message,
     });
   }
 };
@@ -135,5 +135,5 @@ module.exports = {
   getTaskById,
   getAllTasks,
   updateTask,
-  deleteTask
+  deleteTask,
 };
