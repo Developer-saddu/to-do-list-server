@@ -26,29 +26,6 @@ const createTask = async (req, res) => {
   }
 };
 
-const getTaskById = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const task = await databases.tasks.findByPk(id);
-
-    if (!task) {
-      return res.status(404).json({
-        success: false,
-        message: "Task not found",
-      });
-    }
-    return res.status(200).json({
-      success: true,
-      data: task,
-    });
-  } catch (error) {
-    return res.status(501).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-
 const getAllTasks = async (req, res) => {
   try {
     const tasks = await databases.tasks.findAll();
@@ -64,7 +41,6 @@ const getAllTasks = async (req, res) => {
     });
   } catch (error) {
     console.log(error);
-
     return res.status(501).json({
       success: false,
       message: error.message,
@@ -132,7 +108,6 @@ const deleteTask = async (req, res) => {
 
 module.exports = {
   createTask,
-  getTaskById,
   getAllTasks,
   updateTask,
   deleteTask,
