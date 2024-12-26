@@ -1,14 +1,12 @@
 require("dotenv").config();
 
 const express = require("express");
-var bodyParser = require("body-parser");
 const cors = require("cors");
 const api = require("./routes/api");
 const app = express();
 
-app.use(express.json({ limit: "20mb" }));
-app.use(bodyParser.json({ limit: "20mb" }));
-app.use(express.urlencoded({ extended: false, limit: "20mb" }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 let whitelist;
 try {
@@ -18,35 +16,31 @@ try {
   process.exit(1);
 }
 
-var corsOptions = {
+const corsOptions = {
   origin: function (origin, callback) {
     if (
-      process.env.NODE_ENV == "development" ||
-      process.env.NODE_ENV == "deploypment"
+      process.env.NODE_ENV === "development" ||
+      process.env.NODE_ENV === "deploypment"
     ) {
       callback(null, true);
     } else {
-      if (whitelist?.indexOf(origin) !== -1) {
+      if (whitelist?.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Unauthorized Domain"));
       }
     }
-  }
+  },
 };
+
 app.use(cors(corsOptions));
-app.use((err, req, res, next) => {
-  if (err) {
-    return res.status(403).json({ error: err.message });
-  }
-  next();
-});
+
 app.use((req, res, next) => {
   res.set({
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS, PATCH",
     "Access-Control-Allow-Headers":
-      "Origin, Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Content-Disposition"
+      "Origin, Content-Type, Accept, Authorization, X-Requested-With, X-Auth-Token, Content-Disposition",
   });
   if (req.method === "OPTIONS") {
     return res.sendStatus(200);
@@ -57,7 +51,8 @@ app.use((req, res, next) => {
 const init = async () => {
   app.use("/api/v1", api);
   app.listen(process.env.PORT, () => {
-    console.log(`app running on ${process.env.PORT}`);
+    console.log(`App running on ${process.env.PORT}`);
   });
 };
+
 init();
