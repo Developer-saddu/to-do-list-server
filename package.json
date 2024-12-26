@@ -1,0 +1,33 @@
+{
+  "name": "to_do_list_server",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "nodemon index.js",
+    "dev": "concurrently \"nodemon index.js\"",
+    "db:create": "sequelize db:create --charset utf8mb4 --collate utf8mb4_unicode_ci",
+    "db:migrate": "sequelize db:migrate",
+    "db:drop": "sequelize db:drop",
+    "prod:db:migrate": "NODE_ENV=production sequelize db:migrate",
+    "db:migrate:undo:all": "sequelize db:migrate:undo:all",
+    "prod:db:create": "NODE_ENV=production sequelize db:create --charset utf8mb4 --collate utf8mb4_unicode_ci",
+    "db:seed": "sequelize db:seed:all",
+    "prod:db:seed": "NODE_ENV=production sequelize db:seed:all",
+    "prod:db:drop": "NODE_ENV=production sequelize db:drop --charset utf8mb4 --collate utf8mb4_unicode_ci",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.19.2",
+    "fs": "^0.0.1-security",
+    "mysql2": "^3.9.5",
+    "sequelize": "^6.37.3",
+    "sequelize-auto": "^0.8.8",
+    "sequelize-cli": "^6.2.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "nodemon": "^3.1.0"
+  }
+}
